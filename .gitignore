@@ -1,0 +1,32 @@
+public class Solution{
+
+public TreeNode buildTree(int[] inorder, int i, int j, int[] postorder, int k, int l)
+    {
+        if ( k > l || i > j ) return null;
+        
+        int val = postorder[l];
+        int mid = i;
+        
+        for(int n = 0; n <= j;n++){
+            if(inorder[n] == val){
+            mid = n;
+            break;
+            }
+        }
+        
+        
+        TreeNode newNode = new TreeNode(val);
+        newNode.left = buildTree(inorder, i, mid-1, postorder, k, k+mid-i-1);
+        newNode.right = buildTree(inorder, mid+1, j, postorder, k+mid-i, l-1);
+        
+        return newNode;
+    }
+    
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        return buildTree(inorder, 0, inorder.length-1, postorder, 0, postorder.length-1);
+    }
+    
+    
+}
